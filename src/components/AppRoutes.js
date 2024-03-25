@@ -14,6 +14,12 @@ import MySuggestions from './pages/protected/MySuggestions'
 import MyComplaints from './pages/protected/MyComplaints'
 import MyPetitions from './pages/protected/MyPetitions'
 import ProtectedRoute from './utils/ProtectedRoute';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminComplaints from './pages/admin/AdminComplaints';
+import AdminSuggestions from './pages/admin/AdminSuggestions';
+import AdminPetitions from './pages/admin/AdminPetitions';
+import AdminSignIn from './pages/admin/AdminSignIn';
+import JoinPetitions from './JoinPetitions';
 
 const AppRoutes = () => {
   return (
@@ -24,12 +30,13 @@ const AppRoutes = () => {
             </>
 
             <Routes>
-                <Route exact path='/' element={ <Home /> } />
-                <Route exact path='/home' element={ <Home /> } />
+                <Route exact path='/' element={ <ProtectedRoute><Home /></ProtectedRoute> } />
+                <Route exact path='/home' element={ <ProtectedRoute><Home /></ProtectedRoute> } />
                 <Route path='*' element={ <Page404 /> } />
 
                 <Route path='/signup' element={ <SignUp /> } />
                 <Route path='/signin' element={ <SignIn /> } />
+                <Route path='/admin-signin' element={ <AdminSignIn /> } />
 
                 <Route path='/my-profile' element={ <ProtectedRoute><MyProfile /></ProtectedRoute> } />
                 <Route path='/my-suggestions' element={ <ProtectedRoute><MySuggestions /></ProtectedRoute> } />
@@ -39,7 +46,13 @@ const AppRoutes = () => {
                 <Route path='/suggestions' element={ <ProtectedRoute><Suggestions /></ProtectedRoute> } />
                 <Route path='/complaints' element={ <ProtectedRoute><Complaints /></ProtectedRoute> } />
                 <Route path='/petitions' element={ <ProtectedRoute><Petitions /></ProtectedRoute> } />
+                <Route path='/join-petitions' element={ <ProtectedRoute><JoinPetitions /></ProtectedRoute> } />
                 <Route path='/ideas' element={ <ProtectedRoute><Ideas /></ProtectedRoute> } />
+
+                <Route path='/admin-dashboard' element={ <ProtectedRoute><AdminDashboard /></ProtectedRoute> } />
+                <Route path='/admin-suggestions' element={ <ProtectedRoute><AdminSuggestions /></ProtectedRoute> } />
+                <Route path='/admin-complaints' element={ <ProtectedRoute><AdminComplaints /></ProtectedRoute> } />
+                <Route path='/admin-petitions' element={ <ProtectedRoute><AdminPetitions /></ProtectedRoute> } />
             </Routes>
         </BrowserRouter>
     </>

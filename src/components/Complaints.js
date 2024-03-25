@@ -9,7 +9,7 @@ const Complaints = () => {
   const authUser = useSelector(state => state.authRed.user);
 const [formData, setFormData] = useState({
   uid:authUser.uid,
-  name: '',
+  email: authUser.email,
   title: '',
   area: '',
   pincode: '',
@@ -43,7 +43,7 @@ const handleSubmit = (event) => {
           <div className="">
             {!submitted ? (
               <form onSubmit={handleSubmit}>
-                <div className="form-group pb-4">
+                {/* <div className="form-group pb-4">
                   <label htmlFor="name" className="d-block mb-2">Your Name</label>
                   <input
                     id="name"
@@ -54,7 +54,7 @@ const handleSubmit = (event) => {
                     value={formData.name}
                     onChange={handleInputChange}
                   />
-                </div>
+                </div> */}
                 <div className="form-group pb-4">
                   <label htmlFor="title" className="d-block mb-2">Complaint Title</label>
                   <input

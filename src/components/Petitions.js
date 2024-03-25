@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const Petitions = () => {
   const authUser = useSelector(state => state.authRed.user);
  
-  const [isNameFocused, setIsNameFocused] = useState(false);
+  // const [isNameFocused, setIsNameFocused] = useState(false);
   const [isCauseFocused, setIsCauseFocused] = useState(false);
   const [isTitleFocused, setIsTitleFocused] = useState(false);
   const [isImagesFocused, setIsImagesFocused] = useState(false);
@@ -16,9 +16,9 @@ const Petitions = () => {
  
   const handleFocus = (field) => {
     switch (field) {
-      case 'name':
-        setIsNameFocused(true);
-        break;
+      // case 'name':
+      //   setIsNameFocused(true);
+      //   break;
       case 'cause':
         setIsCauseFocused(true);
         break;
@@ -38,9 +38,9 @@ const Petitions = () => {
  
   const handleBlur = (field) => {
     switch (field) {
-      case 'name':
-        setIsNameFocused(false);
-        break;
+      // case 'name':
+      //   setIsNameFocused(false);
+      //   break;
       case 'cause':
         setIsCauseFocused(false);
         break;
@@ -60,7 +60,7 @@ const Petitions = () => {
  
   const [formData, setFormData] = useState({
     uid:authUser.uid,
-    name: '',
+    // name: '',
     cause: '',
     title: '',
     message: ''
@@ -127,7 +127,7 @@ const Petitions = () => {
             encType="multipart/form-data"
             onSubmit={handleSubmit}
           >
-            <div className="form-group pb-4">
+            {/* <div className="form-group pb-4">
               <label htmlFor="name" className={isNameFocused ? 'd-block mb-2 active' : 'd-block mb-2'}>Your Name</label>
               <input
                 id="name"
@@ -139,7 +139,7 @@ const Petitions = () => {
                 onBlur={() => handleBlur('name')}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
  
             <div className="form-group pb-4">
               <label htmlFor="cause" className={isCauseFocused ? 'd-block mb-2 active' : 'd-block mb-2'}>Cause</label>

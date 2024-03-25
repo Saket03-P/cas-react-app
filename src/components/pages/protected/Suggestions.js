@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Confetti from 'react-confetti';
-import { db } from '../../configs/firebase'; // Import Firebase Firestore configuration
+import { auth, db } from '../../configs/firebase'; // Import Firebase Firestore configuration
 import { useDispatch, useSelector } from "react-redux";
 
 const Suggestions = () => {
@@ -11,6 +11,7 @@ const Suggestions = () => {
   const dispatch = useDispatch();
     const authUser = useSelector(state => state.authRed.user);
     const uid=authUser.uid;
+    const email= authUser.email
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
@@ -32,6 +33,7 @@ const Suggestions = () => {
       // Add suggestion to Firestore
       await db.collection('suggestions').add({
         uid,
+        email,
         category,
         message,
         timestamp: new Date()

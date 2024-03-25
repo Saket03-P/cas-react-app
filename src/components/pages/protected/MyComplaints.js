@@ -37,7 +37,7 @@ const MyComplaints = () => {
         <ul>
           <h2 style={{ color: 'red' }}>My Complaints</h2>
           {complaints.map(complaint => (
-            <li key={complaint.id}>{complaint.formData.name}</li>
+            <li key={complaint.id}>Complaint: {complaint.formData.title}<br /> Message: {complaint.formData.message}</li>
             // Adjust the display based on your complaint data structure
           ))}
         </ul>

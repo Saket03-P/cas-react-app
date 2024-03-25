@@ -11,7 +11,8 @@ function CreatePetition(props) {
     <div className="details-container">
       <h2 className="text-success">Petition has been created !!</h2>
       <div className="details">
-      <p><strong>Name:</strong> {props.details.name}</p>
+      {/* <p><strong>Name:</strong> {props.details.name}</p> */}
+      <img src={props.details.images} width={50} height={50} />
       <p><strong>Cause: </strong>{props.details.cause}</p>
       <p><strong>Title:</strong> {props.details.title}</p>
       <p><strong>Description: </strong>{props.details.message}</p>

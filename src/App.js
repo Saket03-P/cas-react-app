@@ -46,7 +46,6 @@ function App() {
 
   return (
     <div className="App">
-      City Administration System
       <AppRoutes />
       {/* <BrowserRouter>
         <nav>

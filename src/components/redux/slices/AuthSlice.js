@@ -36,9 +36,17 @@ export const AuthSlice= createSlice({
             state.role= ''
             state.isLoggedIn= false
             // console.log(localStorage.getItem('user_id'))
+        }, 
+        loginAdmin: (state, action) => {
+            state.isLoggedIn= true
+            state.role= 'admin'
+        }, 
+        logoutAdmin: (state, action) => {
+            state.isLoggedIn= false
+            state.role= ''
         }
     }
 })
 
-export const { clearUserData, setUserData }= AuthSlice.actions
+export const { clearUserData, setUserData, loginAdmin, logoutAdmin }= AuthSlice.actions
 export default AuthSlice.reducer
