@@ -1,0 +1,31 @@
+.form-horizontal .control-label{
+    text-align: left;
+}
+ 
+.form-group label {
+    text-align: left;
+  }
+  img{
+    width:25%;
+    height:25%;
+    display:inline;
+  }
+ 
+  .details-container {
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: #f9f9f9;
+   
+  }
+ 
+  .details {
+    margin-top: 20px;
+    text-align: left;
+  }
+ 
+  .complaint-details p {
+    margin-bottom: 10px;
+  }

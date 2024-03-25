@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 import { auth } from '../../configs/firebase';
-// import { auth } from "../configs/firebase";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { setUserData } from "../../redux/slices/AuthSlice";
 import { useDispatch, useSelector } from "react-redux"; 
-
+import { useNavigate } from "react-router-dom";
+// import { logIn } from "../../redux/slices/AuthSlice";
 
 const SignIn=()=>{
-    // const [email,SetEmail]=useState('');
-    // const [password,SetPassword]=useState('');
-
-    // const auth= getAuth()
-
-    const dispath= useDispatch()
-    const loginData= useSelector(store => store.authRed.userData)
+    const dispatch= useDispatch()
+    const navigate= useNavigate()
 
     const [signInInput, setSignInInput]= useState({ username: '', password: '' })
 
@@ -24,9 +19,14 @@ const SignIn=()=>{
     const submitSignIn = (evt) => {
         signInWithEmailAndPassword(auth, signInInput.username, signInInput.password)
             .then((userCredentials) => {
-                const user= userCredentials.user
-                console.log('Signed In User ', user)
+                // const { email, uid }= action.payload
+                // state.uesr= { email, uid }
+                const user= { email: userCredentials.user.email, uid: userCredentials.user.uid }
+                // localStorage.setItem('user_id', user)
+                dispatch(setUserData(user))
+                console.log('Signed In User ', user.email)
             })
+            .then(() => navigate('/'))
             .catch((err) => {
                 console.log(err)
             })
@@ -34,29 +34,6 @@ const SignIn=()=>{
             setSignInInput({ username: '', password: '' })
         evt.preventDefault()
     }
-
-    // const handleSignIn= (evt) => {
-    //     evt.preventDefault()
-
-    //     signInWithEmailAndPassword(auth, email, password)
-    //     .then((userCredentials) => {
-    //         const user= userCredentials.user
-    //         console.log('Signed in User', user)
-    //     })
-    //     .catch((err) => {
-    //         console.log(err)
-    //     })
-    // }
- 
-    // const signIn=(e)=>{
-    //     e.preventDefault();
-    //     signInWithEmailAndPassword(auth,email,password)
-    //     .then((response)=>{
-    //         console.log(response)
-    //     }).catch((error)=>{
-    //         console.log(error)
-    //     });
-    // };
 
     return(
         <div className="sign-in-container">
@@ -67,13 +44,6 @@ const SignIn=()=>{
                 <input type="password" name="password" value={ signInInput.password } onChange={ handleSignIn } />
                 <br />
                 <button type="submit">Sign In</button>
-
-{/* 
-                <input type="email" placeholder="Enter your email" value={email}
-                onChange={(e)=>{SetEmail(e.target.value)}}></input>
-                <input type="password" placeholder="Enter your password" value={password}
-                onChange={(e)=>{SetPassword(e.target.value)}}></input>
-                <button type="submit">Login</button> */}
             </form>
         </div>
     )

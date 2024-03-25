@@ -1,74 +1,104 @@
 import React, { useState } from "react";
 import { auth } from "../../configs/firebase";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { db } from "../../configs/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
  
 const SignUp=()=>{
-    // const [email,SetEmail]=useState('');
-    // const [password,SetPassword]=useState('');
+    const [signUpInput, setSignUpInput]= useState({ 
+        email: '', 
+        password: '',
+        displayName: '',
+        dob: '', 
+        address: ''
+    })
 
-    const [signUpInput, setSignUpInput]= useState({ username: '', password: '' })
+    const navigate= useNavigate()
 
     const handleSignUp = (evt) => {
-        setSignUpInput({ ...signUpInput, [evt.target.name]: evt.target.value })
-    }
+        evt.preventDefault();
 
-    const submitSignUp = (evt) => {
-        createUserWithEmailAndPassword(auth, signUpInput.username, signUpInput.password)
+        createUserWithEmailAndPassword(auth, signUpInput.email, signUpInput.password)
             .then((newUserCredentials) => {
-                const newUser= newUserCredentials.user
-                console.log('Signed Up User ', newUser)
+                const newUser = newUserCredentials.user;
+
+                // Store additional user details in Firestore
+                const userDetails = {
+                    displayName: signUpInput.displayName,
+                    dob: signUpInput.dob,
+                    address: signUpInput.address,
+                    // Add more fields as needed
+                };
+
+                // Set additional user details in Firestore
+                db.collection('users').doc(newUser.uid).set(userDetails)
+                    .then(() => {
+                        console.log('User details stored successfully in Firestore');
+                    })
+                    .catch((error) => {
+                        console.error('Error storing user details:', error);
+                    });
+
+                console.log('Signed Up User ', newUser);
+                navigate('/signin')
             })
             .catch((err) => {
-                console.log(err)
-            })
+                console.error('Error signing up user:', err);
+            });
 
-        setSignUpInput({ username: '', password: '' })
-        evt.preventDefault()
+        // Clear sign-up input fields after submission
+        setSignUpInput({
+            email: '',
+            password: '',
+            displayName: '',
+            dob: '',
+            address: ''
+        });
     }
 
-    // const auth= getAuth()
-    // const handleSignUp= (evt) => {
-    //     evt.preventDefault()
+    // const handleSignUp = (evt) => {
+    //     setSignUpInput({ ...signUpInput, [evt.target.name]: evt.target.value })
+    // }
 
-    //     createUserWithEmailAndPassword(auth, email, password)
-    //         .then((userCredentials) => {
-    //             const user= userCredentials.user
-    //             console.log("user registered", user)
-    //             SetEmail('')
-    //             SetPassword('')
+    // const submitSignUp = (evt) => {
+    //     createUserWithEmailAndPassword(auth, signUpInput.username, signUpInput.password)
+    //         .then((newUserCredentials) => {
+    //             const newUser= newUserCredentials.user
+    //             console.log('Signed Up User ', newUser)
     //         })
     //         .catch((err) => {
     //             console.log(err)
     //         })
-    // }
 
-    // const signUp=(e)=>{
-    //     e.preventDefault();
-    //     createUserWithEmailAndPassword(auth,email,password)
-    //     .then((response)=>{
-    //         console.log(response)
-    //     }).catch((error)=>{
-    //         console.log(error)
-    //     });
-    // };
+    //     setSignUpInput({ username: '', password: '' })
+    //     evt.preventDefault()
+    // }
     
     return(
         <div className="sign-in-container">
-            <form onSubmit={ submitSignUp }>
-               
+            <form onSubmit={handleSignUp}>
+                <h1>Sign Up</h1>
+                <input type="text" name="displayName" placeholder="Display Name" value={signUpInput.displayName} onChange={(e) => setSignUpInput({ ...signUpInput, displayName: e.target.value })} required />
+                <br />
+                <input type="email" name="email" placeholder="Email" value={signUpInput.email} onChange={(e) => setSignUpInput({ ...signUpInput, email: e.target.value })} required />
+                <br />
+                <input type="password" name="password" placeholder="Password" value={signUpInput.password} onChange={(e) => setSignUpInput({ ...signUpInput, password: e.target.value })} required />
+                <br />
+                <input type="date" name="dob" placeholder="Date of Birth" value={signUpInput.dob} onChange={(e) => setSignUpInput({ ...signUpInput, dob: e.target.value })} required />
+                <br />
+                <textarea name="address" placeholder="Address" value={signUpInput.address} onChange={(e) => setSignUpInput({ ...signUpInput, address: e.target.value })} required />
+                <br />
+                <button type="submit">Sign Up</button>
+            </form>
+
+            {/* <form onSubmit={ submitSignUp }>
                 <h1>Sign Up</h1>
                 <input type="email" name="username" value={ signUpInput.username } onChange={ handleSignUp } />
                 <br />
                 <input type="password" name="password" value={ signUpInput.password } onChange={ handleSignUp } />
                 <br />
                 <button>Sign Up</button>
-
-                {/* <input type="email" placeholder="Enter your email" value={email}
-                onChange={(e)=>{SetEmail(e.target.value)}}></input>
-                <input type="password" placeholder="Enter your password" value={password}
-                onChange={(e)=>{SetPassword(e.target.value)}}></input>
-                <button type="submit">SignUp</button> */}
-            </form>
+            </form> */}
         </div>
     )
 }

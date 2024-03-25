@@ -6,9 +6,13 @@ import Page404 from './Page404';
 import Suggestions from './pages/protected/Suggestions';
 import Complaints from './Complaints';
 import Petitions from './Petitions';
-import Ideas from './pages/Ideas';
-import SignUp from './auth/SignUp';
-import SignIn from './auth/SignIn';
+import Ideas from './Ideas';
+import SignUp from './pages/auth/SignUp'
+import SignIn from './pages/auth/SignIn'
+import MyProfile from './pages/protected/MyProfile'
+import MySuggestions from './pages/protected/MySuggestions'
+import MyComplaints from './pages/protected/MyComplaints'
+import MyPetitions from './pages/protected/MyPetitions'
 import ProtectedRoute from './utils/ProtectedRoute';
 
 const AppRoutes = () => {
@@ -20,41 +24,24 @@ const AppRoutes = () => {
             </>
 
             <Routes>
-                <Route exact path='' element={ <Home /> } />
-                <Route exact path='home' element={ <Home /> } />
+                <Route exact path='/' element={ <Home /> } />
+                <Route exact path='/home' element={ <Home /> } />
                 <Route path='*' element={ <Page404 /> } />
 
                 <Route path='/signup' element={ <SignUp /> } />
                 <Route path='/signin' element={ <SignIn /> } />
 
-                <Route path='/suggestions' element={ <ProtectedRoute children={ <Suggestions /> } /> } />
-                <Route path='/complaints' element={ <ProtectedRoute children={ <Complaints /> } /> } />
-                <Route path='/petitions' element={ <ProtectedRoute children={ <Petitions /> } /> } />
-                <Route path='/ideas' element={ <ProtectedRoute children={ <Ideas /> } /> } />
+                <Route path='/my-profile' element={ <ProtectedRoute><MyProfile /></ProtectedRoute> } />
+                <Route path='/my-suggestions' element={ <ProtectedRoute><MySuggestions /></ProtectedRoute> } />
+                <Route path='/my-complaints' element={ <ProtectedRoute><MyComplaints /></ProtectedRoute> } />
+                <Route path='/my-petitions' element={ <ProtectedRoute><MyPetitions /></ProtectedRoute> } />
+
+                <Route path='/suggestions' element={ <ProtectedRoute><Suggestions /></ProtectedRoute> } />
+                <Route path='/complaints' element={ <ProtectedRoute><Complaints /></ProtectedRoute> } />
+                <Route path='/petitions' element={ <ProtectedRoute><Petitions /></ProtectedRoute> } />
+                <Route path='/ideas' element={ <ProtectedRoute><Ideas /></ProtectedRoute> } />
             </Routes>
         </BrowserRouter>
-        
-        {/* <BrowserRouter>
-            <>
-                <MenuBar />
-            </>
-
-            <div>
-                <Routes>
-                    <Route exact path='' element={ <Home /> } />
-                    <Route exact path='home' element={ <Home /> } />
-                    <Route path='*' element={ <Page404 /> } />
-
-                    <Route path='/signup' element={ <SignUp /> } />
-                    <Route path='/signin' element={ <SignIn /> } />
-
-                    <Route exact path='/suggestions' element={ <Suggestions /> } />
-                    <Route exact path='/complaints' element={ <Complaints /> } />
-                    <Route exact path='/petitions' element={ <Petitions /> } />
-                    <Route exact path='/ideas' element={ <Ideas /> } />
-                </Routes>
-            </div>
-        </BrowserRouter> */}
     </>
   )
 }
